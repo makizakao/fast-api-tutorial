@@ -2,9 +2,9 @@ from typing import List
 from fastapi import Depends, FastAPI, HTTPException
 from sqlalchemy.orm import Session
 
-from database import get_db
-from items.article import Article
-from models.articles import DBArticles
+from backend.database import get_db
+from backend.items.article import Article
+from backend.models.articles import DBArticles
 
 # 4. FastAPIアプリの初期化
 app = FastAPI()
