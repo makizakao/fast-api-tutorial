@@ -9,25 +9,19 @@ def test_get_articles_seeded_data():
     response = client.get("/articles")
     assert response.status_code == 200
 
-    data = response.json()
+    data = sorted(response.json(), key=lambda x: x["id"])
 
     # init.sql の投入件数を検証（例）
-    assert len(data) == 2
+    assert len(data) == 3
 
-    # init.sql の1件目を検証（例）
-    assert data[0]["id"] == 1
-    assert data[0]["title"] == "最初"
-    assert data[0]["content"] == "これは最初の記事です。"
+    # 期待する完全一致（順序が保証される場合）
+    expected = [
+        {"id": 1, "title": "最初", "content": "これは最初の記事です。"},
+        {"id": 2, "title": "二番目", "content": "これは二番目の記事です。"},
+        {"id": 3, "title": "三番目", "content": "これは三番目の記事です。"},
+    ]
 
-    # init.sql の2件目を検証（例）
-    assert data[1]["id"] == 2
-    assert data[1]["title"] == "二番目"
-    assert data[1]["content"] == "これは二番目の記事です。"
-
-    # init.sql の3件目を検証（例）
-    assert data[2]["id"] == 3
-    assert data[2]["title"] == "三番目"
-    assert data[2]["content"] == "これは三番目の記事です。"
+    assert data == expected
 
 def test_get_articles_schema():
     response = client.get("/articles")
