@@ -1,0 +1,14 @@
+name: Run Deploy
+
+on:
+  workflow_call:
+
+jobs:
+  run-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # 以下にデプロイテストのジョブを追加します
+      - name: Run deploy
+        run: |
+          echo "Deploying application..."
