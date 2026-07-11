@@ -27,7 +27,7 @@ jobs:
       #    ローカル同様に PYTHONPATH を指定して pytest を実行します
       - name: Run pytest
         run: |
-          docker compose exec -T web env PYTHONPATH=. pytest
+          docker compose exec -T backend env PYTHONPATH=. pytest
 
       # 5. 後片付け
       - name: Stop containers
