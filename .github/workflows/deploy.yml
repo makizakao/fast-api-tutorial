@@ -6,4 +6,9 @@ on:
 jobs:
   run-deploy:
     runs-on: ubuntu-latest
-    # 以下にデプロイテストのジョブを追加します
+    steps:
+      - uses: actions/checkout@v4
+      # 以下にデプロイテストのジョブを追加します
+      - name: Run deploy
+        run: |
+          echo "Deploying application..."
