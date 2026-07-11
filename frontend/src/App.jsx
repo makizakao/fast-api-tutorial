@@ -22,11 +22,24 @@ function App() {
         <div style={{ padding: '20px' }}>
             <h1>バックエンド接続確認</h1>
             {error && <p style={{ color: 'red' }}>エラー: {error}</p>}
-            <ul>
+            <table border="1" style={{ borderCollapse: 'collapse', width: '100%' }}>
+                <thead>
+                <tr>
+                    <th style={{ padding: '10px' }}>ID</th>
+                    <th style={{ padding: '10px' }}>Title</th>
+                    <th style={{ padding: '10px' }}>Content</th>
+                </tr>
+                </thead>
+                <tbody>
                 {articles.map((article) => (
-                    <li key={article.id}>{article.title || article.name}</li>
+                    <tr key={article.id}>
+                        <td style={{ padding: '10px' }}>{article.id}</td>
+                        <td style={{ padding: '10px' }}>{article.title}</td>
+                        <td style={{ padding: '10px' }}>{article.content}</td>
+                    </tr>
                 ))}
-            </ul>
+                </tbody>
+            </table>
         </div>
     );
 }
