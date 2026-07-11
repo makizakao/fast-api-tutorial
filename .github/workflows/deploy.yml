@@ -1,0 +1,9 @@
+name: Run Deploy
+
+on:
+  workflow_call:
+
+jobs:
+  run-deploy:
+    runs-on: ubuntu-latest
+    # 以下にデプロイテストのジョブを追加します
