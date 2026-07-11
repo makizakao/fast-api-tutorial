@@ -1,5 +1,5 @@
 from sqlalchemy import Integer, Column, String
-from database import Base
+from backend.database import Base
 
 class DBArticles(Base):
     __tablename__ = "articles"  # SQLのテーブル名
