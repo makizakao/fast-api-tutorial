@@ -54,6 +54,11 @@ npm start
 
 フロントエンドが起動します: http://localhost:3000
 
+### Codespacesの場合
+
+port 3000 を公開する必要があります。Codespaces のポート設定で 3000 番を公開してください。
+また、フロントエンドの URL は Codespaces のポート URL になります。
+
 ## テスト実行
 
 バックエンドのテストを実行:
@@ -105,6 +110,7 @@ GET /articles
 ```bash
 docker compose down
 ```
+
 
 ## ファイル説明
 
