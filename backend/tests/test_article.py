@@ -23,6 +23,7 @@ def test_get_articles_seeded_data():
 
     assert data == expected
 
+
 def test_get_articles_schema():
     response = client.get("/articles")
     assert response.status_code == 200

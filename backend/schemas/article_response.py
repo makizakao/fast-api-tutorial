@@ -1,7 +1,8 @@
 from pydantic import BaseModel, ConfigDict
 
+
 # APIのレスポンス型
-class Article(BaseModel):
+class ArticleResponse(BaseModel):
     id: int
     title: str
     content: str

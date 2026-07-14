@@ -1,16 +1,30 @@
-# React + Vite
+# Next.js + TypeScript
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+このフロントエンドは Next.js の App Router を使っています。`src/App.tsx` が記事一覧を表示するクライアントコンポーネントです。
 
-Currently, two official plugins are available:
+## 使い方
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
-## React Compiler
+ブラウザで `http://localhost:3000` を開くと、FastAPI の `/articles` を取得して表示します。
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 環境変数
 
-## Expanding the ESLint configuration
+`NEXT_PUBLIC_API_URL` にバックエンドの URL を設定します。
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+例:
+
+```bash
+NEXT_PUBLIC_API_URL=http://localhost:8000
+```
+
+## スクリプト
+
+- `npm run dev` - 開発サーバー起動
+- `npm run build` - 本番ビルド
+- `npm run start` - 本番サーバー起動
+- `npm run lint` - ESLint 実行

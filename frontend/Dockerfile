@@ -1,17 +1,35 @@
-FROM node:20-slim
-
+# --- 1. 依存関係のインストールステージ ---
+FROM node:20-slim AS deps
 WORKDIR /app
 
-# パッケージ管理ファイルを先にコピーしてキャッシュを利かせる
 COPY package*.json ./
+RUN npm ci
 
-# 依存ライブラリのインストール
-RUN npm ci || npm install
+# --- 2. ビルドステージ ---
+FROM node:20-slim AS builder
+WORKDIR /app
 
-# ソースコードをコピー
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Reactの開発サーバーが使用するポートを開放 (Viteは5173、CRAは3000が一般的ですが、3000番に統一して起動します)
-EXPOSE 3000
+# 本番用にビルドを実行
+RUN npm run build
 
-ENTRYPOINT ["npx", "vite", "--host", "0.0.0.0", "--port", "3000"]
+# --- 3. 実行用ステージ（本番環境用） ---
+FROM node:20-slim AS runner
+WORKDIR /app
+
+ENV NODE_ENV=production
+
+# 実行に必要な最小限のファイルだけをビルド成果物からコピー
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+
+# 本番サーバーのポート
+EXPOSE 3000
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
+
+# standaloneモードでは、next start ではなく node server.js で起動します
+CMD ["node", "server.js"]

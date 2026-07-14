@@ -1,6 +1,6 @@
 # Fast API Tutorial
 
-FastAPI と React を使ったシンプルな Web アプリケーション。PostgreSQL データベースに記事データを保存し、API 経由で取得・表示します。
+FastAPI と Next.js を使ったシンプルな Web アプリケーション。PostgreSQL データベースに記事データを保存し、API 経由で取得・表示します。
 
 ## プロジェクト構成
 
@@ -17,9 +17,12 @@ fast-api-tutorial/
 │   │   └── articles.py  # SQLAlchemy モデル
 │   └── tests/
 │       └── test_article.py
-├── frontend/             # React フロントエンド
+├── frontend/             # Next.js フロントエンド
 │   ├── src/
-│   │   └── App.jsx
+│   │   ├── App.tsx
+│   │   └── app/
+│   │       ├── layout.tsx
+│   │       └── page.tsx
 │   └── ...
 ├── docker-compose.yml
 └── init.sql             # DB 初期化スクリプト
@@ -49,10 +52,12 @@ API サーバーが起動しています:
 ```bash
 cd frontend
 npm install
-npm start
+npm run dev
 ```
 
 フロントエンドが起動します: http://localhost:3000
+
+`NEXT_PUBLIC_API_URL=http://localhost:8000` を設定すると、Next.js から FastAPI を参照できます。
 
 ### Codespacesの場合
 
@@ -118,6 +123,8 @@ docker compose down
 - `backend/database.py`: SQLAlchemy の DB 接続設定
 - `backend/models/articles.py`: DB テーブル定義
 - `backend/items/article.py`: API レスポンス用 Pydantic スキーマ
-- `frontend/src/App.jsx`: React コンポーネント
+- `frontend/src/App.tsx`: Next.js で使う React コンポーネント
+- `frontend/src/app/page.tsx`: ルートページ
+- `frontend/src/app/layout.tsx`: 共通レイアウト
 - `docker-compose.yml`: Docker Compose の設定
 - `init.sql`: PostgreSQL の初期化スクリプト
