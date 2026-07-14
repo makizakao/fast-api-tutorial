@@ -1,7 +1,9 @@
 from sqlalchemy import Integer, Column, String
+
 from backend.database import Base
 
-class DBArticles(Base):
+
+class Articles(Base):
     __tablename__ = "articles"  # SQLのテーブル名
 
     id = Column(Integer, primary_key=True, index=True)

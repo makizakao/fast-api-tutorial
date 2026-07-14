@@ -1,12 +1,35 @@
+from datetime import datetime, timezone, timedelta
+
+import jwt
 from fastapi.testclient import TestClient
 
+from backend.auth.util import SECRET_KEY, ALGORITHM
 from backend.main import app
 
 client = TestClient(app)
 
 
+def get_test_auth_headers():
+    """テスト用に有効期限24時間の有効なJWTトークンヘッダーを生成するヘルパー関数"""
+    expire = datetime.now(timezone.utc) + timedelta(days=1)
+
+    # プログラム側の仕様に合わせてペイロードを組み立てます
+    # もしプログラム側を「user_id」にした場合は以下を {"user_id": 1, ...} にしてください
+    token_data = {
+        "sub": "1",  # テストユーザーID (admin)
+        "username": "admin",  # テストユーザー名
+        "exp": expire
+    }
+
+    # 秘密鍵で暗号署名
+    token = jwt.encode(token_data, SECRET_KEY, algorithm=ALGORITHM)
+    return {"Authorization": f"Bearer {token}"}
+
+
 def test_get_articles_seeded_data():
-    response = client.get("/articles")
+    headers = get_test_auth_headers()
+    response = client.get("/articles", headers=headers)
+
     assert response.status_code == 200
 
     data = sorted(response.json(), key=lambda x: x["id"])
@@ -23,8 +46,11 @@ def test_get_articles_seeded_data():
 
     assert data == expected
 
+
 def test_get_articles_schema():
-    response = client.get("/articles")
+    headers = get_test_auth_headers()
+    response = client.get("/articles", headers=headers)
+
     assert response.status_code == 200
 
     data = response.json()
